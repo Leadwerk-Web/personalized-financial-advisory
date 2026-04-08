@@ -17,6 +17,8 @@ const chartData = [
 ];
 
 export default function Home() {
+  const [isChartVisible, setIsChartVisible] = React.useState(false);
+
   return (
     <div>
       {/* 1. Personal Hero */}
@@ -215,9 +217,17 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="lg:col-span-2 h-[400px] w-full">
+              <motion.div 
+                onViewportEnter={() => setIsChartVisible(true)}
+                viewport={{ once: true, margin: "-50px" }}
+                className="lg:col-span-2 h-[400px] w-full"
+              >
                 <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart data={chartData} margin={{ top: 20, right: 20, left: 0, bottom: 0 }}>
+                  <AreaChart 
+                    key={isChartVisible ? 'visible' : 'hidden'}
+                    data={chartData} 
+                    margin={{ top: 20, right: 20, left: 0, bottom: 0 }}
+                  >
                     <defs>
                       <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="5%" stopColor="#234c43" stopOpacity={0.3}/>
@@ -260,6 +270,7 @@ export default function Home() {
                       strokeWidth={3}
                       fillOpacity={1} 
                       fill="url(#colorWithout)" 
+                      animationDuration={1500}
                     />
                     <Area 
                       type="monotone" 
@@ -269,10 +280,11 @@ export default function Home() {
                       strokeWidth={3}
                       fillOpacity={1} 
                       fill="url(#colorValue)" 
+                      animationDuration={2000}
                     />
                   </AreaChart>
                 </ResponsiveContainer>
-              </div>
+              </motion.div>
             </div>
           </div>
         </div>

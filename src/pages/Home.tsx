@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'motion/react';
+import { motion, useInView } from 'motion/react';
 import { ArrowRight, ShieldCheck, TrendingUp, Sun, CheckCircle2, Star, X, Building2, UserCheck, Award, Users, Briefcase, Download } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from 'recharts';
 import { clientStories, credentials, generalFaq } from '../data/content';
@@ -17,7 +17,8 @@ const chartData = [
 ];
 
 export default function Home() {
-  const [isChartVisible, setIsChartVisible] = React.useState(false);
+  const chartRef = React.useRef(null);
+  const isChartInView = useInView(chartRef, { once: true, amount: 0.2 });
 
   return (
     <div>
@@ -217,74 +218,74 @@ export default function Home() {
                 </div>
               </div>
 
-              <motion.div 
-                onViewportEnter={() => setIsChartVisible(true)}
-                viewport={{ once: true, margin: "-50px" }}
+              <div 
+                ref={chartRef}
                 className="lg:col-span-2 h-[400px] w-full"
               >
-                <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart 
-                    key={isChartVisible ? 'visible' : 'hidden'}
-                    data={chartData} 
-                    margin={{ top: 20, right: 20, left: 0, bottom: 0 }}
-                  >
-                    <defs>
-                      <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#234c43" stopOpacity={0.3}/>
-                        <stop offset="95%" stopColor="#234c43" stopOpacity={0}/>
-                      </linearGradient>
-                      <linearGradient id="colorWithout" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#fb7185" stopOpacity={0.3}/>
-                        <stop offset="95%" stopColor="#fb7185" stopOpacity={0}/>
-                      </linearGradient>
-                    </defs>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e6d5c3" />
-                    <XAxis 
-                      dataKey="age" 
-                      tickFormatter={(val) => `${val} J.`} 
-                      stroke="#1a3c34"
-                      tick={{ fill: '#1a3c34', opacity: 0.7 }}
-                      tickLine={false}
-                      axisLine={false}
-                      dy={10}
-                    />
-                    <YAxis 
-                      tickFormatter={(val) => `${val / 1000}k €`} 
-                      stroke="#1a3c34"
-                      tick={{ fill: '#1a3c34', opacity: 0.7 }}
-                      tickLine={false}
-                      axisLine={false}
-                      dx={-10}
-                    />
-                    <Tooltip 
-                      formatter={(value: number) => new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(value)}
-                      labelFormatter={(label) => `Alter: ${label} Jahre`}
-                      contentStyle={{ borderRadius: '12px', border: '1px solid #f2efe9', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)' }}
-                    />
-                    <ReferenceLine x={45} stroke="#d4bfa5" strokeDasharray="3 3" label={{ position: 'top', value: 'Eintritt BU', fill: '#1a3c34', fontSize: 12, opacity: 0.7 }} />
-                    <Area 
-                      type="monotone" 
-                      dataKey="withoutProtection" 
-                      name="Ohne Absicherung"
-                      stroke="#fb7185" 
-                      strokeWidth={3}
-                      fillOpacity={1} 
-                      fill="url(#colorWithout)" 
-                      animationDuration={1500}
-                    />
-                    <Area 
-                      type="monotone" 
-                      dataKey="value" 
-                      name="Mit Absicherung"
-                      stroke="#234c43" 
-                      strokeWidth={3}
-                      fillOpacity={1} 
-                      fill="url(#colorValue)" 
-                      animationDuration={2000}
-                    />
-                  </AreaChart>
-                </ResponsiveContainer>
-              </motion.div>
+                {isChartInView && (
+                  <ResponsiveContainer width="100%" height="100%">
+                    <AreaChart 
+                      data={chartData} 
+                      margin={{ top: 20, right: 20, left: 0, bottom: 0 }}
+                    >
+                      <defs>
+                        <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor="#234c43" stopOpacity={0.3}/>
+                          <stop offset="95%" stopColor="#234c43" stopOpacity={0}/>
+                        </linearGradient>
+                        <linearGradient id="colorWithout" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor="#fb7185" stopOpacity={0.3}/>
+                          <stop offset="95%" stopColor="#fb7185" stopOpacity={0}/>
+                        </linearGradient>
+                      </defs>
+                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e6d5c3" />
+                      <XAxis 
+                        dataKey="age" 
+                        tickFormatter={(val) => `${val} J.`} 
+                        stroke="#1a3c34"
+                        tick={{ fill: '#1a3c34', opacity: 0.7 }}
+                        tickLine={false}
+                        axisLine={false}
+                        dy={10}
+                      />
+                      <YAxis 
+                        tickFormatter={(val) => `${val / 1000}k €`} 
+                        stroke="#1a3c34"
+                        tick={{ fill: '#1a3c34', opacity: 0.7 }}
+                        tickLine={false}
+                        axisLine={false}
+                        dx={-10}
+                      />
+                      <Tooltip 
+                        formatter={(value: number) => new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(value)}
+                        labelFormatter={(label) => `Alter: ${label} Jahre`}
+                        contentStyle={{ borderRadius: '12px', border: '1px solid #f2efe9', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)' }}
+                      />
+                      <ReferenceLine x={45} stroke="#d4bfa5" strokeDasharray="3 3" label={{ position: 'top', value: 'Eintritt BU', fill: '#1a3c34', fontSize: 12, opacity: 0.7 }} />
+                      <Area 
+                        type="monotone" 
+                        dataKey="withoutProtection" 
+                        name="Ohne Absicherung"
+                        stroke="#fb7185" 
+                        strokeWidth={3}
+                        fillOpacity={1} 
+                        fill="url(#colorWithout)" 
+                        animationDuration={1500}
+                      />
+                      <Area 
+                        type="monotone" 
+                        dataKey="value" 
+                        name="Mit Absicherung"
+                        stroke="#234c43" 
+                        strokeWidth={3}
+                        fillOpacity={1} 
+                        fill="url(#colorValue)" 
+                        animationDuration={2000}
+                      />
+                    </AreaChart>
+                  </ResponsiveContainer>
+                )}
+              </div>
             </div>
           </div>
         </div>

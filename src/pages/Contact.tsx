@@ -120,18 +120,49 @@ export default function Contact() {
 
         </div>
 
-        <div className="mt-24 pt-12 border-t border-ivory-200 grid sm:grid-cols-3 gap-8 text-center">
-          <div>
-            <p className="font-bold text-forest-900 mb-2">E-Mail</p>
-            <a href="mailto:hallo@mueller-finanz.de" className="text-forest-800/80 hover:text-forest-900">hallo@mueller-finanz.de</a>
+        <div className="mt-24 pt-12 border-t border-ivory-200">
+          <div className="text-center mb-12">
+            <h2 className="text-2xl font-bold text-forest-900 mb-4">Warum Kunden mir vertrauen</h2>
+            <p className="text-forest-800/70">Unabhängige Beratung mit Brief und Siegel.</p>
           </div>
-          <div>
-            <p className="font-bold text-forest-900 mb-2">Telefon</p>
-            <a href="tel:+49800123456" className="text-forest-800/80 hover:text-forest-900">0800 123 456</a>
+          
+          <div className="grid sm:grid-cols-3 gap-8 text-center mb-16">
+            <div>
+              <div className="w-12 h-12 bg-sand-100 rounded-full flex items-center justify-center text-forest-800 mx-auto mb-4">
+                <CheckCircle2 className="w-6 h-6" />
+              </div>
+              <p className="font-bold text-forest-900 mb-1">IHK Geprüft</p>
+              <p className="text-sm text-forest-800/60">Geprüfter Fachwirt für Finanzberatung</p>
+            </div>
+            <div>
+              <div className="w-12 h-12 bg-sand-100 rounded-full flex items-center justify-center text-forest-800 mx-auto mb-4">
+                <CheckCircle2 className="w-6 h-6" />
+              </div>
+              <p className="font-bold text-forest-900 mb-1">100% Unabhängig</p>
+              <p className="text-sm text-forest-800/60">Keine Bindung an Banken oder Versicherer</p>
+            </div>
+            <div>
+              <div className="w-12 h-12 bg-sand-100 rounded-full flex items-center justify-center text-forest-800 mx-auto mb-4">
+                <CheckCircle2 className="w-6 h-6" />
+              </div>
+              <p className="font-bold text-forest-900 mb-1">Transparente Kosten</p>
+              <p className="text-sm text-forest-800/60">Klare Honorar- oder Provisionsmodelle</p>
+            </div>
           </div>
-          <div>
-            <p className="font-bold text-forest-900 mb-2">Büro</p>
-            <p className="text-forest-800/80">Musterstraße 123<br/>10115 Berlin</p>
+
+          <div className="grid sm:grid-cols-3 gap-8 text-center">
+            <div>
+              <p className="font-bold text-forest-900 mb-2">E-Mail</p>
+              <a href="mailto:hallo@mueller-finanz.de" className="text-forest-800/80 hover:text-forest-900">hallo@mueller-finanz.de</a>
+            </div>
+            <div>
+              <p className="font-bold text-forest-900 mb-2">Telefon</p>
+              <a href="tel:+49800123456" className="text-forest-800/80 hover:text-forest-900">0800 123 456</a>
+            </div>
+            <div>
+              <p className="font-bold text-forest-900 mb-2">Büro</p>
+              <p className="text-forest-800/80">Musterstraße 123<br/>10115 Berlin</p>
+            </div>
           </div>
         </div>
 

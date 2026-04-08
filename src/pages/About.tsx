@@ -52,11 +52,15 @@ export default function About() {
           <h2 className="text-3xl font-bold mb-12 text-center">Meine Qualifikationen</h2>
           <div className="grid md:grid-cols-3 gap-8">
             {credentials.map((cred, i) => (
-              <div key={i} className="bg-forest-800 p-8 rounded-2xl">
+              <motion.div 
+                key={i} 
+                whileHover={{ y: -5, borderColor: 'rgba(212, 191, 165, 0.4)' }}
+                className="bg-forest-800 p-8 rounded-2xl border border-transparent transition-colors"
+              >
                 <h3 className="font-bold text-xl mb-3">{cred.title}</h3>
                 <p className="text-sand-300 text-sm mb-4">{cred.issuer}</p>
                 <p className="text-ivory-50/80">{cred.shortExplanation}</p>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>

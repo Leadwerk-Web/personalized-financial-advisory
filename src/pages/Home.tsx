@@ -51,13 +51,14 @@ export default function Home() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="relative mx-auto w-full max-w-md"
           >
-            <div className="aspect-[4/5] rounded-3xl overflow-hidden bg-sand-200 relative">
+            <div className="aspect-[4/5] rounded-3xl overflow-hidden bg-sand-200 relative group">
               <img 
                 src="https://picsum.photos/seed/advisor-calm/800/1000" 
                 alt="Max Müller - Finanzberater" 
                 className="w-full h-full object-cover"
                 referrerPolicy="no-referrer"
               />
+              <div className="absolute inset-0 bg-gradient-to-t from-forest-900/30 to-transparent pointer-events-none" />
             </div>
           </motion.div>
         </div>
@@ -117,7 +118,21 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={{
+              hidden: { opacity: 0 },
+              visible: {
+                opacity: 1,
+                transition: {
+                  staggerChildren: 0.2
+                }
+              }
+            }}
+            className="grid md:grid-cols-3 gap-8"
+          >
             {[
               {
                 title: 'Absicherung',
@@ -141,16 +156,24 @@ export default function Home() {
                 color: 'bg-sand-200 text-forest-900'
               }
             ].map((topic, i) => (
-              <Link key={i} to={topic.link} className={`rounded-3xl p-8 transition-transform hover:-translate-y-1 ${topic.color}`}>
-                <topic.icon className="w-10 h-10 mb-6 opacity-80" />
-                <h3 className="text-2xl font-bold mb-3">{topic.title}</h3>
-                <p className="opacity-90 mb-8 leading-relaxed">{topic.desc}</p>
-                <div className="flex items-center gap-2 font-semibold text-sm uppercase tracking-wider">
-                  Mehr erfahren <ArrowRight className="w-4 h-4" />
-                </div>
-              </Link>
+              <motion.div
+                key={i}
+                variants={{
+                  hidden: { opacity: 0, y: 30 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+                }}
+              >
+                <Link to={topic.link} className={`block h-full rounded-3xl p-8 transition-transform hover:-translate-y-1 ${topic.color}`}>
+                  <topic.icon className="w-10 h-10 mb-6 opacity-80" />
+                  <h3 className="text-2xl font-bold mb-3">{topic.title}</h3>
+                  <p className="opacity-90 mb-8 leading-relaxed">{topic.desc}</p>
+                  <div className="flex items-center gap-2 font-semibold text-sm uppercase tracking-wider">
+                    Mehr erfahren <ArrowRight className="w-4 h-4" />
+                  </div>
+                </Link>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
